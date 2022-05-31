@@ -1,14 +1,5 @@
-terraform {
-    required_providers {
-        aws = {
-            source    = "hashicorp/aws"
-            version   = "~> 3.0"
-        }
-    }
-}
-
-provider "aws" {
-    region = var.region
+data "aws_availability_zones" "available" {
+    state = "available"
 }
 
 resource "aws_vpc" "AILab-vpc" {
@@ -19,32 +10,32 @@ resource "aws_vpc" "AILab-vpc" {
     }
 }
 
-resource "aws_subnet" "AILab-subnet-prd-a" {
+resource "aws_subnet" "AILab-subnet-prd-0" {
     vpc_id      = aws_vpc.AILab-vpc.id
     cidr_block  = "172.10.0.0/24"
-    availability_zone = "${var.region}a"
+    availability_zone = "${data.aws_availability_zones.available.names[0]}"
 
     tags = {
-        Name = "AILab-subnet-prd-a"
+        Name = "AILab-subnet-prd-0"
     }
 }
 
-resource "aws_subnet" "AILab-subnet-prd-c" {
+resource "aws_subnet" "AILab-subnet-prd-1" {
+    vpc_id      = aws_vpc.AILab-vpc.id
+    cidr_block  = "172.10.1.0/24"
+    availability_zone = "${data.aws_availability_zones.available.names[1]}"
+
+    tags = {
+        Name = "AILab-subnet-prd-1"
+    }
+}
+
+resource "aws_subnet" "AILab-subnet-prd-2" {
     vpc_id      = aws_vpc.AILab-vpc.id
     cidr_block  = "172.10.2.0/24"
-    availability_zone = "${var.region}c"
+    availability_zone = "${data.aws_availability_zones.available.names[2]}"
 
     tags = {
-        Name = "AILab-subnet-prd-c"
-    }
-}
-
-resource "aws_subnet" "AILab-subnet-prd-d" {
-    vpc_id      = aws_vpc.AILab-vpc.id
-    cidr_block  = "172.10.3.0/24"
-    availability_zone = "${var.region}d"
-
-    tags = {
-        Name = "AILab-subnet-prd-d"
+        Name = "AILab-subnet-prd-2"
     }
 }
