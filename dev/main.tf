@@ -19,32 +19,32 @@ resource "aws_vpc" "AILab-vpc" {
     }
 }
 
-resource "aws_subnet" "AILab-subnet-dev-a" {
+resource "aws_subnet" "AILab-subnet-dev-0" {
     vpc_id      = aws_vpc.AILab-vpc.id
     cidr_block  = "172.10.0.0/24"
-    availability_zone = "${var.region}a"
+    availability_zone = ${data.aws_availability_zones.available.names[0]}
 
     tags = {
-        Name = "AILab-subnet-dev-a"
+        Name = "AILab-subnet-dev-0"
     }
 }
 
-resource "aws_subnet" "AILab-subnet-dev-c" {
+resource "aws_subnet" "AILab-subnet-dev-1" {
+    vpc_id      = aws_vpc.AILab-vpc.id
+    cidr_block  = "172.10.1.0/24"
+    availability_zone = ${data.aws_availability_zones.available.names[1]}
+
+    tags = {
+        Name = "AILab-subnet-dev-1"
+    }
+}
+
+resource "aws_subnet" "AILab-subnet-dev-2" {
     vpc_id      = aws_vpc.AILab-vpc.id
     cidr_block  = "172.10.2.0/24"
-    availability_zone = "${var.region}c"
+    availability_zone = ${data.aws_availability_zones.available.names[2]}
 
     tags = {
-        Name = "AILab-subnet-dev-c"
-    }
-}
-
-resource "aws_subnet" "AILab-subnet-dev-d" {
-    vpc_id      = aws_vpc.AILab-vpc.id
-    cidr_block  = "172.10.3.0/24"
-    availability_zone = "${var.region}d"
-
-    tags = {
-        Name = "AILab-subnet-dev-d"
+        Name = "AILab-subnet-dev-2"
     }
 }
