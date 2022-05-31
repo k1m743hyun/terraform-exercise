@@ -20,6 +20,6 @@ resource "aws_vpc" "AILab-vpc" {
 }
 
 resource "aws_subnet" "main" {
-    vpc_id      = aws_vpc.main.id
+    vpc_id      = aws_vpc.AILab-vpc.id
     cidr_block  = "172.31.0.0/24"
 }
