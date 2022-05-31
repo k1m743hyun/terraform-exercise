@@ -1,3 +1,7 @@
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 resource "aws_vpc" "AILab-vpc" {
     cidr_block = "172.10.0.0/16"
 
