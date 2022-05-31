@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 resource "aws_vpc" "AILab-vpc" {
-    cidr_block = "172.31.0.0/16"
+    cidr_block = "172.10.0.0/16"
 
     tags = {
         Name = "AILab-vpc-dev"
@@ -21,7 +21,7 @@ resource "aws_vpc" "AILab-vpc" {
 
 resource "aws_subnet" "AILab-subnet-dev-a" {
     vpc_id      = aws_vpc.AILab-vpc.id
-    cidr_block  = "172.31.0.0/24"
+    cidr_block  = "172.10.0.0/24"
     availability_zone = "${var.region}a"
 
     tags = {
@@ -31,7 +31,7 @@ resource "aws_subnet" "AILab-subnet-dev-a" {
 
 resource "aws_subnet" "AILab-subnet-dev-b" {
     vpc_id      = aws_vpc.AILab-vpc.id
-    cidr_block  = "172.31.1.0/24"
+    cidr_block  = "172.10.1.0/24"
     availability_zone = "${var.region}b"
 
     tags = {
@@ -41,7 +41,7 @@ resource "aws_subnet" "AILab-subnet-dev-b" {
 
 resource "aws_subnet" "AILab-subnet-dev-c" {
     vpc_id      = aws_vpc.AILab-vpc.id
-    cidr_block  = "172.31.2.0/24"
+    cidr_block  = "172.10.2.0/24"
     availability_zone = "${var.region}c"
 
     tags = {
