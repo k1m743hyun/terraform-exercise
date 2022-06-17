@@ -1,41 +1,6 @@
-data "aws_availability_zones" "available" {
-    state = "available"
-}
-
-resource "aws_vpc" "AILab-vpc" {
-    cidr_block = "172.10.0.0/16"
-
-    tags = {
-        Name = "AILab-vpc-dev"
-    }
-}
-
-resource "aws_subnet" "AILab-subnet-dev-0" {
-    vpc_id      = aws_vpc.AILab-vpc.id
-    cidr_block  = "172.10.0.0/24"
-    availability_zone = "${data.aws_availability_zones.available.names[0]}"
-
-    tags = {
-        Name = "AILab-subnet-dev-0"
-    }
-}
-
-resource "aws_subnet" "AILab-subnet-dev-1" {
-    vpc_id      = aws_vpc.AILab-vpc.id
-    cidr_block  = "172.10.1.0/24"
-    availability_zone = "${data.aws_availability_zones.available.names[1]}"
-
-    tags = {
-        Name = "AILab-subnet-dev-1"
-    }
-}
-
-resource "aws_subnet" "AILab-subnet-dev-2" {
-    vpc_id      = aws_vpc.AILab-vpc.id
-    cidr_block  = "172.10.2.0/24"
-    availability_zone = "${data.aws_availability_zones.available.names[2]}"
-
-    tags = {
-        Name = "AILab-subnet-dev-2"
-    }
+module "vpc" {
+    source                    = "./vpc"
+    vpc_cidr_block            = "10.0.0.0/16"
+    public_subnet_cidr_block  = "10.0.0.0/24"
+    private_subnet_cidr_block = "10.0.1.0/24"
 }
