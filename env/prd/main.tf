@@ -1,6 +1,9 @@
 module "vpc" {
-    source                    = "../../modules/vpc"
-    vpc_cidr_block            = "10.0.0.0/16"
-    public_subnet_cidr_block  = "10.0.0.0/24"
-    private_subnet_cidr_block = "10.0.1.0/24"
+    source = "../../modules/vpc"
+    
+    name            = var.name
+    cidr            = var.cidr
+    azs             = var.azs
+    public_subnets  = var.public_subnets
+    private_subnets = var.private_subnets
 }
