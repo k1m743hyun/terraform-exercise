@@ -1,12 +1,17 @@
 resource "aws_s3_bucket" "terraform_state" {
     bucket = "terraform-state"
     
-    # 실수로 S3 버킷을 삭제하는 것을 방지
+    # 실수로 S3 버킷을 삭제하는 것을 방지합니다
     lifecycle {
         prevent_destroy = true
     }
 
-    # 서버 측 암호화를 활성화
+    # 코드 이력을 관리하기 위해 상태 파일의 버전 관리를 활성화합니다
+    versioning {
+        enable = true
+    }
+
+    # 서버 측 암호화를 활성화합니다
     server_side_encryption_configuration {
         rule {
             apply_server_side_encryption_by_default {
