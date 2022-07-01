@@ -3,6 +3,11 @@
 # You must provide a value for each of these parameters.
 # ---------------------------------------------------------------------------------------------------------------------
 
+variable "region" {
+  type        = string
+  description = "AWS region"
+}
+
 variable "cluster_name" {
   description = "The name to use for all the cluster resources"
   type        = string
