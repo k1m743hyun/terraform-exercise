@@ -1,10 +1,12 @@
 terraform {
-  required_version = ">= 1.0.0, < 2.0.0"
+  backend "s3" {
+    # 이전에 생성한 버킷 이름으로 변경
+    bucket          = "terraform-state"
+    key             = "global/s3/terraform.tfstate"
+    region          = "us-east-2"
 
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
+    # 이전에 생성한 다이나모DB 테이블 이름으로 변경
+    dynamodb_tablee = "terraform-locks"
+    encrypt         = true
   }
-}
+} 
