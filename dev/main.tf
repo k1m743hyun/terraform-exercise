@@ -1,5 +1,5 @@
 module "webserver_cluster" {
-  source = "../../../modules/services/webserver-cluster"
+  source = "../modules/services/webserver-cluster"
 
   # (parameters hidden for clarity)
 
