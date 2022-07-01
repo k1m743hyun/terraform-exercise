@@ -1,16 +1,16 @@
 resource "aws_launch_configuration" "example" {
-  image_id        = "ami-0fb653ca2d3203ac1"
-  instance_type   = "t2.micro"
+  image_id               = "ami-0c55b159cbfafe1f0"
+  instance_type          = "t2.micro"
+
   security_groups = [aws_security_group.instance.id]
 
-  # Render the User Data script as a template
-  user_data = templatefile("user-data.sh", {
-    server_port = var.server_port
-    db_address  = data.terraform_remote_state.db.outputs.address
-    db_port     = data.terraform_remote_state.db.outputs.port
-  })
+  user_data = <<-EOF
+                #!/bin/bash
+                echo "Hello, World" > index.html
+                nohup busybox httpd -f -p ${var.server_port} &
+                EOF
 
-  # Required when using a launch configuration with an auto scaling group.
+  # ASG에서 시작 구성을 사용할 때 필요합니다
   lifecycle {
     create_before_destroy = true
   }
@@ -18,7 +18,7 @@ resource "aws_launch_configuration" "example" {
 
 resource "aws_autoscaling_group" "example" {
   launch_configuration = aws_launch_configuration.example.name
-  vpc_zone_identifier  = data.aws_subnets.default.ids
+  vpc_zone_identifier  = data.aws_subnet_ids.default.ids
 
   target_group_arns = [aws_lb_target_group.asg.arn]
   health_check_type = "ELB"
@@ -34,21 +34,21 @@ resource "aws_autoscaling_group" "example" {
 }
 
 resource "aws_security_group" "instance" {
-  name = var.instance_security_group_name
+  name = "terraform-example-instance"
 
   ingress {
-    from_port   = var.server_port
-    to_port     = var.server_port
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port     = var.server_port
+    to_port       = var.server_port
+    protocol      = "tcp"
+    cidr_blocks   = ["0.0.0.0/0"]
   }
 }
 
 resource "aws_lb" "example" {
-  name               = var.alb_name
-  load_balancer_type = "application"
-  subnets            = data.aws_subnets.default.ids
-  security_groups    = [aws_security_group.alb.id]
+  name                = "terraform-asg-example"
+  load_balancer_type  = "application"
+  subnets             = data.aws_subnet_ids.default.ids
+  security_groups     = [aws_security_group.alb.id]
 }
 
 resource "aws_lb_listener" "http" {
@@ -56,7 +56,6 @@ resource "aws_lb_listener" "http" {
   port              = 80
   protocol          = "HTTP"
 
-  # By default, return a simple 404 page
   default_action {
     type = "fixed-response"
 
@@ -68,8 +67,27 @@ resource "aws_lb_listener" "http" {
   }
 }
 
+resource "aws_security_group" "alb" {
+  name = "terraform-example-alb"
+
+  # 인바운드 HTTP 트래픽 허용
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_lb_target_group" "asg" {
-  name     = var.alb_name
+  name     = "terraform-asg-example"
   port     = var.server_port
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.default.id
@@ -101,69 +119,33 @@ resource "aws_lb_listener_rule" "asg" {
   }
 }
 
-resource "aws_security_group" "alb" {
-  name = var.alb_security_group_name
-
-  # Allow inbound HTTP requests
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # Allow all outbound requests
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 resource "aws_s3_bucket" "terraform_state" {
+  bucket = "terraform-state"
 
-  bucket = var.bucket_name
-
-  // This is only here so we can destroy the bucket as part of automated tests. You should not copy this for production
-  // usage
-  force_destroy = true
-
-}
-
-# Enable versioning so you can see the full revision history of your
-# state files
-resource "aws_s3_bucket_versioning" "enabled" {
-  bucket = aws_s3_bucket.terraform_state.id
-  versioning_configuration {
-    status = "Enabled"
+  # 실수로 S3 버킷을 삭제하는 것을 방지합니다
+  lifecycle {
+    prevent_destroy = true
   }
-}
 
-# Enable server-side encryption by default
-resource "aws_s3_bucket_server_side_encryption_configuration" "default" {
-  bucket = aws_s3_bucket.terraform_state.id
+  # 코드 이력을 관리하기 위해 상태 파일의 버전 관리를 활성화합니다
+  versioning {
+    enabled = true
+  }
 
-  rule {
-    apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
+  # 서버 측 암호화를 활성화합니다
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
     }
   }
 }
 
-# Explicitly block all public access to the S3 bucket
-resource "aws_s3_bucket_public_access_block" "public_access" {
-  bucket                  = aws_s3_bucket.terraform_state.id
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-}
-
 resource "aws_dynamodb_table" "terraform_locks" {
-  name         = var.table_name
+  name        = "terraform-locks"
   billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "LockID"
+  hash_key    = "LockID"
 
   attribute {
     name = "LockID"
