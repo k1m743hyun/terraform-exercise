@@ -144,7 +144,7 @@ resource "aws_s3_bucket" "terraform_state" {
 
 resource "aws_dynamodb_table" "terraform_locks" {
   name        = "terraform-locks"
-  biling_mode = "PAY_PER_REQUEST"
+  billing_mode = "PAY_PER_REQUEST"
   hash_key    = "LockID"
 
   attribute {
