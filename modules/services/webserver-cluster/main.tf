@@ -6,6 +6,20 @@ locals {
   all_ips      = ["0.0.0.0/0"]
 }
 
+resource "aws_security_group" "instance" {
+  name = "${var.cluster_name}-instance"
+}
+
+resource "aws_security_group_rule" "allow_server_http_inbound" {
+  type              = "ingress"
+  security_group_id = aws_security_group.instance.id
+
+  from_port         = var.server_port
+  to_port           = var.server_port
+  protocol          = local.tcp_protocol
+  cidr_blocks       = local.all_ips
+}
+
 resource "aws_launch_configuration" "example" {
   image_id        = "ami-0fb653ca2d3203ac1"
   instance_type   = var.instance_type
@@ -33,17 +47,27 @@ resource "aws_autoscaling_group" "example" {
   }
 }
 
-resource "aws_security_group" "instance" {
-  name = "${var.cluster_name}-instance"
+resource "aws_security_group" "alb" {
+  name = "${var.cluster_name}-alb"
 }
 
-resource "aws_security_group_rule" "allow_server_http_inbound" {
+resource "aws_security_group_rule" "allow_http_inbound" {
   type              = "ingress"
-  security_group_id = aws_security_group.instance.id
+  security_group_id = aws_security_group.alb.id
 
-  from_port         = var.server_port
-  to_port           = var.server_port
+  from_port         = local.http_port
+  to_port           = local.http_port
   protocol          = local.tcp_protocol
+  cidr_blocks       = local.all_ips
+}
+
+resource "aws_security_group_rule" "allow_all_outbound" {
+  type              = "egress"
+  security_group_id = aws_security_group.alb.id
+
+  from_port         = local.any_port
+  to_port           = local.any_port
+  protocol          = local.any_protocol
   cidr_blocks       = local.all_ips
 }
 
@@ -102,28 +126,4 @@ resource "aws_lb_listener_rule" "asg" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.asg.arn
   }
-}
-
-resource "aws_security_group" "alb" {
-  name = "${var.cluster_name}-alb"
-}
-
-resource "aws_security_group_rule" "allow_http_inbound" {
-  type              = "ingress"
-  security_group_id = aws_security_group.alb.id
-
-  from_port         = local.http_port
-  to_port           = local.http_port
-  protocol          = local.tcp_protocol
-  cidr_blocks       = local.all_ips
-}
-
-resource "aws_security_group_rule" "allow_all_outbound" {
-  type              = "egress"
-  security_group_id = aws_security_group.alb.id
-
-  from_port         = local.any_port
-  to_port           = local.any_port
-  protocol          = local.any_protocol
-  cidr_blocks       = local.all_ips
 }
