@@ -13,7 +13,7 @@ module "webserver_cluster" {
 
   ami_id        = var.ami_id
   instance_type = "m4.large"
-  min_size      = 2
+  min_size      = 3
   max_size      = 10
 }
 
