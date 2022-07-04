@@ -8,6 +8,11 @@ variable "region" {
   description = "AWS region"
 }
 
+variable "ami_id" {
+  description = "The AMI ID of EC2 Instances to run"
+  type        = string
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
 # These parameters have reasonable defaults.
