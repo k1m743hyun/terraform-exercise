@@ -11,6 +11,7 @@ module "webserver_cluster" {
 
   cluster_name  = var.cluster_name
 
+  ami_id        = var.ami_id
   instance_type = "t2.micro"
   min_size      = 2
   max_size      = 2
