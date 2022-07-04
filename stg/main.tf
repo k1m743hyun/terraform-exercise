@@ -1,20 +1,28 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.0"
-    }
-  }
+locals {
+  http_port    = 12345
+  any_port     = 0
+  tcp_protocol = "tcp"
+  any_protocol = "-1"
+  all_ips      = ["0.0.0.0/0"]
 }
 
-provider "aws" {
-  region = var.region
+module "webserver_cluster" {
+  source        = "../modules/services/webserver-cluster"
+
+  cluster_name  = var.cluster_name
+
+  ami_id        = var.ami_id
+  instance_type = "t2.micro"
+  min_size      = 2
+  max_size      = 2
 }
 
-resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
+resource "aws_security_group_rule" "allow_testing_inbound" {
+  type              = "ingress"
+  security_group_id = module.webserver_cluster.alb_security_group_id
 
-  tags = {
-    Name = "stg"
-  }
+  from_port         = local.http_port
+  to_port           = local.http_port
+  protocol          = local.tcp_protocol
+  cidr_blocks       = local.all_ips
 }
