@@ -1,4 +1,5 @@
 locals {
+  ami_id       = "ami-0fb653ca2d3203ac1"
   http_port    = 80
   any_port     = 0
   tcp_protocol = "tcp"
@@ -21,7 +22,7 @@ resource "aws_security_group_rule" "allow_server_http_inbound" {
 }
 
 resource "aws_launch_configuration" "example" {
-  image_id        = "ami-0fb653ca2d3203ac1"
+  image_id        = local.ami_id
   instance_type   = var.instance_type
   security_groups = [aws_security_group.instance.id]
 
