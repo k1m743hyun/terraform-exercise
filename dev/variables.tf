@@ -13,6 +13,12 @@ variable "environment" {
   type        = string
 }
 
+variable "vpc_cidr" {}
+
+variable "subnets" {}
+
+variable "route_table" {}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
 # These parameters have reasonable defaults.
