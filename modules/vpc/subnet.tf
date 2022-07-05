@@ -6,7 +6,10 @@ resource "aws_subnet" "this" {
 
   tags = merge(
     {
-      Name = "sbn-${var.tags.Environment}"
+      Name = format(
+        "sbn-${var.tags.Environment}-%s",
+        each.value.name
+      )
     },
     var.tags
   )
