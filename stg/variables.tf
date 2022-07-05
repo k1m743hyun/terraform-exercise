@@ -8,13 +8,18 @@ variable "region" {
   type        = string
 }
 
+variable "environment" {
+  description = "AWS environment"
+  type        = string
+}
+
+variable "vpc_cidr" {}
+
+variable "route_table" {}
+
+variable "subnets" {}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
 # These parameters have reasonable defaults.
 # ---------------------------------------------------------------------------------------------------------------------
-
-variable "environment" {
-  description = "Environment"
-  type        = string
-  default     = "stg"
-}
