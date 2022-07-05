@@ -23,4 +23,3 @@ subnets = {
     route_table = "main"
   }
 }
-
