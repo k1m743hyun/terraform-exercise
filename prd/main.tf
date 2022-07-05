@@ -1,28 +1,9 @@
-locals {
-  http_port    = 12345
-  any_port     = 0
-  tcp_protocol = "tcp"
-  any_protocol = "-1"
-  all_ips      = ["0.0.0.0/0"]
-}
+module "vpc" {
+  source = "../modules/vpc"
 
-module "webserver_cluster" {
-  source        = "../modules/services/webserver-cluster"
+  vpc_cidr = "10.0.0.0/16"
 
-  cluster_name  = var.cluster_name
-
-  ami_id        = var.ami_id
-  instance_type = "m4.large"
-  min_size      = 3
-  max_size      = 10
-}
-
-resource "aws_security_group_rule" "allow_testing_inbound" {
-  type              = "ingress"
-  security_group_id = module.webserver_cluster.alb_security_group_id
-
-  from_port         = local.http_port
-  to_port           = local.http_port
-  protocol          = local.tcp_protocol
-  cidr_blocks       = local.all_ips
+  tags = {
+    Environment = var.environment
+  }
 }
