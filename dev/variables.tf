@@ -4,12 +4,7 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 variable "region" {
-  type        = string
   description = "AWS region"
-}
-
-variable "ami_id" {
-  description = "The AMI ID of EC2 Instances to run"
   type        = string
 }
 
@@ -18,8 +13,8 @@ variable "ami_id" {
 # These parameters have reasonable defaults.
 # ---------------------------------------------------------------------------------------------------------------------
 
-variable "cluster_name" {
-  description = "The name to use to namespace all the resources in the cluster"
+variable "environment" {
+  description = "Environment"
   type        = string
-  default     = "webservers-dev"
+  default     = "dev"
 }
