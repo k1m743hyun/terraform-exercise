@@ -15,9 +15,9 @@ variable "environment" {
 
 variable "vpc_cidr" {}
 
-variable "subnets" {}
-
 variable "route_table" {}
+
+variable "subnets" {}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
