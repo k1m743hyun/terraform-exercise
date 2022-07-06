@@ -18,4 +18,7 @@ variable "route_table" {
   type        = map(map(string))
 }
 
-variable "tags" {}
+variable "tags" {
+  description = ""
+  type = map(string)
+}
