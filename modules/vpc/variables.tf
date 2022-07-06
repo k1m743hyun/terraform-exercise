@@ -10,12 +10,12 @@ variable "vpc_cidr" {
 
 variable "subnets" {
   description = "A list of subnets inside the VPC"
-  type        = map(string)
+  type        = map(any)
 }
 
 variable "route_table" {
   description = "A list of route tables inside the VPC"
-  type        = map(string)
+  type        = map(any)
 }
 
 variable "tags" {}
