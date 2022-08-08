@@ -8,7 +8,7 @@ module "vpc" {
   public_subnets  = var.public_subnets
   private_subnets = var.private_subnets
 
-  azs = [ "${var.region}a", "${var.region}b", "${var.region}c" ]
+  azs = [ "${var.region}a", "${var.region}c", "${var.region}d" ]
 
   tags = {
     Environment = var.environment
