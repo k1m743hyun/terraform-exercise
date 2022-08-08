@@ -1,20 +1,3 @@
-resource "aws_subnet" "this" {
-  vpc_id     = aws_vpc.this.id
-
-  for_each   = var.subnets
-  cidr_block = each.value.cidr_block
-
-  tags = merge(
-    {
-      Name = format(
-        "sbn-${var.tags.Environment}-%s",
-        each.value.name
-      )
-    },
-    var.tags
-  )
-}
-
 # 퍼플릭 서브넷을 정의합니다
 resource "aws_subnet" "public" {
   count = length(local.public_subnets) # 여러 개를 정의합니다
