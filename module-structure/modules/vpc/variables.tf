@@ -8,14 +8,16 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "subnets" {
-  description = "A list of subnets inside the VPC"
-  type        = map(map(string))
+variable "azs" {
+  type = list(string)
 }
 
-variable "route_table" {
-  description = "A list of route tables inside the VPC"
-  type        = map(map(string))
+variable "public_subnets" {
+  type = list(string)
+}
+
+variable "private_subnets" {
+  type = list(string)
 }
 
 variable "tags" {
