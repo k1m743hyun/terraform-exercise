@@ -9,18 +9,21 @@ variable "vpc_cidr" {
 }
 
 variable "azs" {
-  type = list(string)
+  description = ""
+  type        = list(string)
 }
 
 variable "public_subnets" {
-  type = list(string)
+  description = ""
+  type        = list(string)
 }
 
 variable "private_subnets" {
-  type = list(string)
+  description = ""
+  type        = list(string)
 }
 
 variable "tags" {
   description = ""
-  type = map(string)
+  type        = map(string)
 }
