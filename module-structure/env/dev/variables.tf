@@ -18,11 +18,6 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "azs" {
-  description = "AWS Available Zone"
-  type        = list(string)
-}
-
 variable "public_subnets" {
   description = "List of CIDR Blocks for each Public Subnet"
   type        = list(string)
