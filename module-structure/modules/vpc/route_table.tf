@@ -1,19 +1,14 @@
-resource "aws_route_table" "this" {
-  vpc_id = aws_vpc.this.id
-
-  for_each = var.route_table
+# VPC 생성시 기본으로 생성되는 라우트 테이블에 이름을 붙입니다
+# 이걸 서브넷에 연결해 써도 되지만, 여기서는 사용하지 않습니다
+resource "aws_default_route_table" "this" {
+  default_route_table_id = aws_vpc.this.default_route_table_id
 
   tags = merge(
     {
-      Name = "rt-${var.tags.Environment}-${each.value.name}"
+      Name = "rt-${var.tags.Environment}-default"
     },
     var.tags
   )
 }
 
-resource "aws_route_table_association" "this" {
-  for_each = var.subnets
 
-  subnet_id = aws_subnet.this[each.key].id
-  route_table_id = aws_route_table.this[each.value.route_table].id
-}
