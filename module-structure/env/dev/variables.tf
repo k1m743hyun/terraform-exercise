@@ -18,14 +18,19 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "route_table" {
-  description = "A list of route tables inside the VPC"
-  type        = map(map(string))
+variable "azs" {
+  description = "AWS Available Zone"
+  type        = list(string)
 }
 
-variable "subnets" {
-  description = "A list of subnets inside the VPC"
-  type        = map(map(string))
+variable "public_subnets" {
+  description = "List of CIDR Blocks for each Public Subnet"
+  type        = list(string)
+}
+
+variable "private_subnets" {
+  description = "List of CIDR Blocks for each Private Subnet"
+  type        = list(string)
 }
 
 # ---------------------------------------------------------------------------------------------------------------------

@@ -1,10 +1,5 @@
 vpc_cidr = "10.0.0.0/16"
 
-route_table = {
-  "main" = {
-    name = "main"
-  }
-}
 
 subnets = {
   "a" = {
