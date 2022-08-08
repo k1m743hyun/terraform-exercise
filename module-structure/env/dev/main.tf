@@ -8,8 +8,7 @@ module "vpc" {
   public_subnets  = var.public_subnets
   private_subnets = var.private_subnets
 
-  azs = var.azs
-  value = [ for k, sbn in aws_subnet.private : sbn.id ]
+  azs = [ for i, sbn in aws_subnet.public : "${var.region}${i+1}" ]
 
   tags = {
     Environment = var.environment
