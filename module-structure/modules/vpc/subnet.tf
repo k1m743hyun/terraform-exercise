@@ -1,6 +1,6 @@
 # 퍼플릭 서브넷을 정의합니다
 resource "aws_subnet" "public" {
-  count = length(local.public_subnets) # 여러 개를 정의합니다
+  count = length(var.public_subnets) # 여러 개를 정의합니다
   
   vpc_id                  = aws_vpc.this.id
   cidr_block              = var.public_subnets[count.index]
