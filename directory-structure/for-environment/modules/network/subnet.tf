@@ -1,16 +1,14 @@
 # Subnet 생성
 resource "aws_subnet" "this" {
   for_each = var.subnets
-
-  count = length(each.value) # 여러개를 정의합니다
   
   vpc_id            = aws_vpc.this.id
-  cidr_block        = each.value[count.index]
-  availability_zone = var.azs[count.index]
+  cidr_block        = each.value[index(var.subnets, each.value)]
+  #availability_zone = var.azs[count.index]
   
   tags = merge(
     {
-      Name = "sbn-${var.tags.Environment}-${each.value}-${count.index + 1}"
+      Name = "sbn-${var.tags.Environment}-${each.value}-${index(var.subnets, each.value) + 1}"
     },
     var.tags
   )
