@@ -2,8 +2,6 @@
 resource "aws_subnet" "this" {
   for_each = var.subnets
 
-  count = length(each.value)
-
   vpc_id            = aws_vpc.this.id
   cidr_block        = each.value[count.index]
   #availability_zone = var.azs[count.index]
