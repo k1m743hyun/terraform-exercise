@@ -2,7 +2,7 @@ variable "vpc_name" {}
 
 variable "vpc_cidr" {}
 
-variable "vpc_cidr_secondary" {}
+#variable "vpc_cidr_secondary" {}
 
 variable "azs" {
   description = ""
