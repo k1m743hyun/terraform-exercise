@@ -4,7 +4,7 @@ resource "aws_subnet" "this" {
 
   vpc_id            = aws_vpc.this.id
   cidr_block        = element(split("-", var.subnets[count.index]), 1)
-  availability_zone = data.aws_availability_zones.available.names[count.index % 3]
+  availability_zone = var.availability_zone[count.index % 3]
   
   tags = merge(
     {
