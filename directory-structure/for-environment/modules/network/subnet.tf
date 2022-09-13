@@ -8,7 +8,7 @@ resource "aws_subnet" "this" {
   
   tags = merge(
     {
-      Name = "sbn-${var.tags.Environment}-${each.key}-${index(var.subnet[each.key], each.value) + 1}"
+      Name = "sbn-${var.tags.Environment}-${each.key}-${index(var.subnets[each.key], each.value) + 1}"
     },
     var.tags
   )
