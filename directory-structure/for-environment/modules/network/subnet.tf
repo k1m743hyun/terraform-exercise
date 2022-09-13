@@ -15,9 +15,9 @@ resource "aws_subnet" "this" {
 }
 
 # 프라이빗 서브넷을 라우팅 테이블에 연결합니다
-resource "aws_route_table_association" "private" {
+resource "aws_route_table_association" "this" {
   count = length(var.subnets)
 
   subnet_id      = aws_subnet.this[count.index].id
-  route_table_id = aws_route_table.this.id
+  route_table_id = aws_route_table.this[element(split("-", var.subnets[count.index]), 0)].id
 }
