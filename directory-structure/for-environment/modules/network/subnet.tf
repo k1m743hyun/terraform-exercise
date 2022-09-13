@@ -1,5 +1,5 @@
 locals {
-  subnet_cidr = merge(
+  subnet_cidr = concat(
     flatten([ for k, v in var.subnets : [ for c in v : join("-", [k, c]) ] if k == "public" ]),
     flatten([ for k, v in var.subnets : [ for c in v : join("-", [k, c]) ] if k == "private" ])
   )
