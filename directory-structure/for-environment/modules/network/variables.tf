@@ -9,6 +9,8 @@ variable "azs" {
   type        = list(string)
 }
 
+variable "route_tables" {}
+
 variable "subnets" {}
 
 variable "tags" {
