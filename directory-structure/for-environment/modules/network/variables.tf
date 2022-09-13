@@ -9,7 +9,9 @@ variable "azs" {
   type        = list(string)
 }
 
-variable "subnets" {}
+variable "subnet_type" {}
+
+variable "subnet_cidr" {}
 
 variable "tags" {
   description = ""
