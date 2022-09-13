@@ -1,7 +1,7 @@
-output "subnet_ids" {
-  value = [ for k, sbn in aws_subnet.this : join("-", [k, sbn.id])  ]
+output "public_subnet_ids" {
+  value = [ for k, sbn in aws_subnet.this : sbn.id if k < 3 ]
 }
 
-#output "private_subnet_ids" {
-#  value = [ for k, sbn in aws_subnet.this : sbn.id if k > 2 ]
-#}
+output "private_subnet_ids" {
+  value = [ for k, sbn in aws_subnet.this : sbn.id if k > 2 ]
+}
