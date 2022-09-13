@@ -19,7 +19,7 @@ resource "aws_route_table" "this" {
 
   tags = merge(
     {
-      Name = "rtb-${var.tags.Environment}-${each.values}"
+      Name = "rtb-${var.tags.Environment}-${each.value}"
     },
     var.tags
   )
@@ -30,8 +30,8 @@ resource "aws_route_table" "this" {
 resource "aws_route" "this" {
   for_each = var.route_tables
 
-  route_table_id         = aws_route_table[each.values].id
+  route_table_id         = aws_route_table[each.value].id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = each.values == "public" ? aws_internet_gateway.this.id : ""
-  nat_gateway_id         = each.values == "public" ? "" : aws_nat_gateway.this.id
+  gateway_id             = each.value == "public" ? aws_internet_gateway.this.id : ""
+  nat_gateway_id         = each.value == "public" ? "" : aws_nat_gateway.this.id
 }
