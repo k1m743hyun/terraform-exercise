@@ -11,8 +11,6 @@ module "vpc" {
     flatten([ for k, v in var.subnets : [ for c in v : join("-", [k, c]) ] if k == "private" ])
   )
 
-  azs = [ "${var.region}a", "${var.region}c", "${var.region}d" ]
-
   tags = {
     Environment = var.environment
   }
