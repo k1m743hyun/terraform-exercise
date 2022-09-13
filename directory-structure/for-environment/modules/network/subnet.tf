@@ -14,7 +14,7 @@ resource "aws_subnet" "this" {
   )
 }
 
-# 프라이빗 서브넷을 라우팅 테이블에 연결합니다
+# Subnet을 Route table에 연결
 resource "aws_route_table_association" "this" {
   count = length(var.subnets)
 
