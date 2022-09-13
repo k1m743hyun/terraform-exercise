@@ -1,15 +1,18 @@
+locals {
+  subnet_cidr = flatten([ for k, v in var.subnets : [ for c in v : join("-", [k, c]) ] ])
+}
+
 # Subnet 생성
 resource "aws_subnet" "this" {
-  subnet_cidr = flatten([ for k, v in var.subnets : [ for c in v : join("-", [k, c]) ] ])
-  count = length(subnet_cidr)
+  count = length(local.subnet_cidr)
 
   vpc_id            = aws_vpc.this.id
-  cidr_block        = element(split("-", subnet_cidr[count.index]), 1)
+  cidr_block        = element(split("-", local.subnet_cidr[count.index]), 1)
   #availability_zone = var.azs[count.index]
   
   tags = merge(
     {
-      Name = "sbn-${var.tags.Environment}-${element(split("-", subnet_cidr[count.index]), 0)}-${count.index + 1}"
+      Name = "sbn-${var.tags.Environment}-${element(split("-", local.subnet_cidr[count.index]), 0)}-${count.index + 1}"
     },
     var.tags
   )
