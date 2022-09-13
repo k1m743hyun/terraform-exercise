@@ -30,7 +30,7 @@ resource "aws_route_table" "this" {
 resource "aws_route" "this" {
   for_each = var.route_tables
 
-  route_table_id         = aws_route_table[each.value].id
+  route_table_id         = aws_route_table.this[each.value].id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = each.value == "public" ? aws_internet_gateway.this.id : ""
   nat_gateway_id         = each.value == "public" ? "" : aws_nat_gateway.this.id
