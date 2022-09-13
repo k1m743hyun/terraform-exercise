@@ -18,10 +18,10 @@ module "network" {
   }
 }
 
-module "database" {
-  source = "../modules/database"
-}
+#module "database" {
+#  source = "../modules/database"
+#}
 
-module "application" {
-  source = "../modules/application"
-}
+#module "application" {
+#  source = "../modules/application"
+#}
