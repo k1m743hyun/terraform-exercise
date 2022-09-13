@@ -4,11 +4,6 @@ variable "vpc_cidr" {}
 
 #variable "vpc_cidr_secondary" {}
 
-variable "azs" {
-  description = ""
-  type        = list(string)
-}
-
 variable "route_tables" {}
 
 variable "subnets" {}
