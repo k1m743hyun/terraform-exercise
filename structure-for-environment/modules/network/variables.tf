@@ -6,6 +6,8 @@ variable "vpc_cidr" {}
 
 variable "route_tables" {}
 
+variable "availability_zone" {}
+
 variable "subnets" {}
 
 variable "tags" {
