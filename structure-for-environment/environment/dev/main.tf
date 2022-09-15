@@ -19,7 +19,7 @@ module "network" {
 }
 
 module "database" {
-  source = "../modules/database"
+  source = "../../modules/database"
 
   vpc_id = module.network.vpc_id
   tags = {
@@ -28,5 +28,5 @@ module "database" {
 }
 
 #module "application" {
-#  source = "../modules/application"
+#  source = "../../modules/application"
 #}
