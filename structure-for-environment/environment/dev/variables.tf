@@ -23,6 +23,18 @@ variable "subnet_cidr" {
   type        = map(list(string))
 }
 
+variable "rds_value" {
+  
+}
+
+variable "rds_sg_cidr" {
+  
+}
+
+variable "rds_sg_source" {
+  
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
 # These parameters have reasonable defaults.
