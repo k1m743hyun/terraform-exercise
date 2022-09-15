@@ -1,13 +1,13 @@
 # Aurora Postgres Instance 생성
 resource "aws_rds_cluster_instance" "this" {
   for_each                     = { for k, v in var.rds_value : join("-", [k, lookup(v, "multi_az", [])]) => v }
-  identifier                   = format("rdsinst-${var.tags.Owner}-${var.tags.Project}-${var.tags.Environment}-%s-01-az2a", each.value.cluster_identifier)
-  cluster_identifier           = aws_rds_cluster.this[split("-", each.key, 0)].cluster_identifier
+  identifier                   = format("rdsinst-${var.tags.Owner}-${var.tags.Project}-${var.tags.Environment}-%s-01-${element(split("-", each.key), 1)}", each.value.cluster_identifier)
+  cluster_identifier           = aws_rds_cluster.this[element(split("-", each.key), 0)].cluster_identifier
   db_parameter_group_name      = aws_db_parameter_group.rds_instance_parmetg.name
   instance_class               = each.value.instance_class
   engine                       = "aurora-postgresql"
   engine_version               = lookup(each.value, "engine_version", "13.3")
-  availability_zone            = "ap-northeast-2a"
+  availability_zone            = "ap-northeast-2${element(split("-", each.key), 1)[3]}"
   performance_insights_enabled = true
   apply_immediately            = each.value.apply_immediately
   auto_minor_version_upgrade   = false
@@ -16,7 +16,7 @@ resource "aws_rds_cluster_instance" "this" {
 
   tags = merge(
     {
-      Name    = format("rdsinst-${var.tags.Owner}-${var.tags.Project}-${var.tags.Environment}-%s-01-az2a", each.value.cluster_identifier)
+      Name    = format("rdsinst-${var.tags.Owner}-${var.tags.Project}-${var.tags.Environment}-%s-01-${element(split("-", each.key), 1)}", each.value.cluster_identifier)
       Type    = "rdsinst"
       Purpose = "postgres"
     },
