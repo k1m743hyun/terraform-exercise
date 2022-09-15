@@ -7,7 +7,7 @@ resource "aws_rds_cluster_instance" "this" {
   instance_class               = each.value.instance_class
   engine                       = "aurora-postgresql"
   engine_version               = lookup(each.value, "engine_version", "13.3")
-  availability_zone            = "ap-northeast-2${element(split("-", each.key), 1)[3]}"
+  availability_zone            = "ap-northeast-2${substr(element(split("-", each.key), 1), -1, -1)}"
   performance_insights_enabled = true
   apply_immediately            = each.value.apply_immediately
   auto_minor_version_upgrade   = false
