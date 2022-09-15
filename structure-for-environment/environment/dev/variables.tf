@@ -18,9 +18,21 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "subnets" {
+variable "subnet_cidr" {
   description = "List of CIDR Blocks for each Public Subnet"
   type        = map(list(string))
+}
+
+variable "rds_value" {
+  
+}
+
+variable "rds_sg_cidr" {
+  
+}
+
+variable "rds_sg_source" {
+  
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
