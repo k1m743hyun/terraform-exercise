@@ -18,7 +18,7 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "subnets" {
+variable "subnet_cidr" {
   description = "List of CIDR Blocks for each Public Subnet"
   type        = map(list(string))
 }
