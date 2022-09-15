@@ -5,7 +5,7 @@ environment = "dev"
 
 # Network
 vpc_cidr = "10.0.0.0/16"
-subnets  = {
+subnet_cidr  = {
     public = [
         "10.0.0.0/24",
         "10.0.1.0/24",
@@ -34,7 +34,30 @@ rds_value = {
   }
 }
 
+rds_sg_cidr = {
+  # ingress
+  "ingress_5432" = {
+    type        = "ingress"
+    from_port   = "5432"
+    to_port     = "5432"
+    protocol    = "tcp"
+    cidr_blocks = "0.0.0.0/0"
+    description = "ingress all"
+  },
+  # egress
+  "egress_5432" = {
+    type        = "egress"
+    from_port   = "5432"
+    to_port     = "5432"
+    protocol    = "tcp"
+    cidr_blocks = "0.0.0.0/0"
+    description = "egress all"
+  }
+}
 
+rds_sg_source = {
+
+}
 
 
 # Application
