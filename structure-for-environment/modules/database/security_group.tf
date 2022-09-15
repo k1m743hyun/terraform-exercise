@@ -1,12 +1,12 @@
 # Security Gruop
 resource "aws_security_group" "rds_sg" {
-  name = "seg-rds-${var.environment}"
+  name = "seg-rds-${var.tags.Environment}"
 
   vpc_id = var.vpc_id
 
   tags = merge(
     {
-      Name = "seg-rds-${var.environment}"
+      Name = "seg-rds-${var.tags.Environment}"
       Type = "sg"
     },
     var.tags
