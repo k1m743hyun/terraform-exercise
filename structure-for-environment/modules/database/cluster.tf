@@ -4,7 +4,6 @@ resource "aws_rds_global_cluster" "this" {
   global_cluster_identifier = format("rds-${var.tags.Environment}-%s", each.value.cluster_identifier)
   engine                    = "aurora-postgresql"
   engine_version            = lookup(each.value, "engine_version", "13.3")
-  #source_db_cluster_identifier = aws_rds_cluster.this[each.key].arn
   storage_encrypted = true
 }
 
