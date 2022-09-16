@@ -21,6 +21,8 @@ module "network" {
 module "database" {
   source = "../../modules/database"
 
+  region = var.region
+
   vpc_id = module.network.vpc_id
 
   rds_az = flatten([ for k, v in var.rds_config : [ for az in lookup(var.rds_config[k], "multi_az") : join("-", [k, az]) ] ])
