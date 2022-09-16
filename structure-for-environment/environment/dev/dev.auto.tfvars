@@ -27,8 +27,8 @@ rds_config = {
     instance_class                   = "db.t2.micro"
     snapshot_identifier              = null
     multi_az                         = ["az2a", "az2c"]
-    db_cluster_parameter_group_name  = "db-dev-rds-cluster"
-    db_instance_parameter_group_name = "db-dev-rds-instance"
+    db_cluster_parameter_group_name  = "parmetg-dev-rds-cluster"
+    db_instance_parameter_group_name = "parmetg-dev-rds-instance"
     apply_immediately                = true
     deletion_protection = true
   }
