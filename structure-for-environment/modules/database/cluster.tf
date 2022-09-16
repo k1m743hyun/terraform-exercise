@@ -1,4 +1,4 @@
-# aurora postgres global cluster
+# Aurora Postgres Global Cluster
 resource "aws_rds_global_cluster" "this" {
   for_each                  = var.rds_value
   global_cluster_identifier = format("rds-${var.tags.Environment}-%s", each.value.cluster_identifier)
@@ -7,7 +7,7 @@ resource "aws_rds_global_cluster" "this" {
   storage_encrypted = true
 }
 
-# aurora postgres cluster
+# Aurora Postgres Cluster
 resource "aws_rds_cluster" "this" {
   for_each                        = var.rds_value
   cluster_identifier              = format("rds-${var.tags.Environment}-%s-01", each.value.cluster_identifier)
