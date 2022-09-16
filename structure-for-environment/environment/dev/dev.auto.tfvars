@@ -23,7 +23,6 @@ subnet_cidr  = {
 rds_config = {
   "rds" = {
     cluster_identifier               = "rds"
-    engine_version                   = "13.5"
     instance_class                   = "db.r4.large"
     snapshot_identifier              = null
     multi_az                         = ["az2a", "az2c"]
