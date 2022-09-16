@@ -23,7 +23,7 @@ module "database" {
 
   vpc_id = module.network.vpc_id
 
-  rds_value = [ for az in lookup(var.rds_config, "multi_az") :  { for k, v in var.rds_config : join("-", [k, az]) => v } ]
+  rds_value = { for k, v in var.rds_config : [for az in lookup(var.rds_config[k], "multi_az") : join("-", [k, az])] => v }
   rds_sg_cidr = var.rds_sg_cidr
   rds_sg_source = var.rds_sg_source
 
