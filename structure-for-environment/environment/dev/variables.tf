@@ -23,7 +23,7 @@ variable "subnet_cidr" {
   type        = map(list(string))
 }
 
-variable "rds_value" {
+variable "rds_config" {
   
 }
 

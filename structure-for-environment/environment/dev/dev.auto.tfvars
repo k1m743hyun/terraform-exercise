@@ -20,7 +20,7 @@ subnet_cidr  = {
 
 
 # Database
-rds_value = {
+rds_config = {
   "rds" = {
     cluster_identifier               = "rds"
     engine_version                   = "13.5"
