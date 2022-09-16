@@ -11,8 +11,8 @@ resource "aws_rds_global_cluster" "this" {
 resource "aws_rds_cluster" "this" {
   for_each                        = var.rds_value
   cluster_identifier              = format("rds-${var.tags.Environment}-%s-01", each.value.cluster_identifier)
-  #master_username                 = var.rds_master_username
-  #master_password                 = var.rds_master_password
+  master_username                 = var.rds_master_username
+  master_password                 = var.rds_master_password
   backup_retention_period         = 14
   db_subnet_group_name            = "sbng-${var.tags.Environment}-rds"
   db_cluster_parameter_group_name = lookup(each.value, "db_cluster_parameter_group_name", aws_rds_cluster_parameter_group.rds_cluster_parmetg.name)
