@@ -4,6 +4,8 @@ variable "tags" {}
 
 #variable "kms" {}
 
+variable "rds_az" {}
+
 variable "rds_value" {}
 
 variable "rds_sg_cidr" {}
