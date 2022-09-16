@@ -1,4 +1,4 @@
-# Security Gruop
+# Security Group
 resource "aws_security_group" "rds_sg" {
   name = "seg-rds-${var.tags.Environment}"
 
