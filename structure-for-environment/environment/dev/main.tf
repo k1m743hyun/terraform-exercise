@@ -28,6 +28,8 @@ module "database" {
   rds_sg_cidr = var.rds_sg_cidr
   rds_sg_source = var.rds_sg_source
 
+  subnet_ids = module.network.output.private_subnet_ids
+
   tags = {
     Environment = var.environment
   }
