@@ -28,6 +28,9 @@ module "database" {
   rds_sg_cidr = var.rds_sg_cidr
   rds_sg_source = var.rds_sg_source
 
+  rds_master_username = var.rds_master_username
+  rds_master_password = var.rds_master_password
+
   subnet_ids = module.network.private_subnet_ids
 
   tags = {
