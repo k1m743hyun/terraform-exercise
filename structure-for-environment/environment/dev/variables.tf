@@ -23,17 +23,15 @@ variable "subnet_cidr" {
   type        = map(list(string))
 }
 
-variable "rds_config" {
-  
-}
+variable "rds_config" {}
 
-variable "rds_sg_cidr" {
-  
-}
+variable "rds_sg_cidr" {}
 
-variable "rds_sg_source" {
-  
-}
+variable "rds_sg_source" {}
+
+variable "rds_master_username" {}
+
+variable "rds_master_password" {}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
