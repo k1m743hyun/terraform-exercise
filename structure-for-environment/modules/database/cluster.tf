@@ -26,7 +26,7 @@ resource "aws_rds_cluster" "this" {
   #kms_key_id                      = var.kms.rds
   storage_encrypted               = true
   apply_immediately               = each.value.apply_immediately
-  deletion_protection             = lookup(each.value, "deletion_protection", true)
+  #deletion_protection             = lookup(each.value, "deletion_protection", true)
 
   snapshot_identifier = each.value.snapshot_identifier
 
