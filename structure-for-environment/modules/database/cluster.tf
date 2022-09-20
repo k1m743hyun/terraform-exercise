@@ -30,6 +30,10 @@ resource "aws_rds_cluster" "this" {
 
   snapshot_identifier = each.value.snapshot_identifier
 
+  depends_on = [
+    aws_db_subnet_group.rds_sbng
+  ]
+
   tags = merge(
     {
       Name    = format("rds-${var.tags.Environment}-%s-01", each.value.cluster_identifier)
