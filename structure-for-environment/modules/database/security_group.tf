@@ -2,11 +2,7 @@
 resource "aws_security_group" "rds_sg" {
   name = "seg-rds-${var.tags.Environment}"
 
-  vpc_id = aws_vpc.this.id
-
-  depends_on = [
-    aws_vpc.this
-  ]
+  vpc_id = var.vpc_id
 
   tags = merge(
     {
