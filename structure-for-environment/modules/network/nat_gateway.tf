@@ -10,7 +10,7 @@ resource "aws_nat_gateway" "this" {
   
   tags = merge(
     {
-      Name = "nat-${var.tags.Environment}-natgw"
+      Name = "${var.tags.Environment}-nat"
       Type = "nat"
     },
     var.tags

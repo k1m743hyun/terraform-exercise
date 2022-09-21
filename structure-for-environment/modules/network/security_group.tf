@@ -8,8 +8,8 @@ resource "aws_default_security_group" "this" {
   
   tags = merge(
     {
-      Name = "seg-${var.tags.Environment}-default"
-      Type = "seg"
+      Name = "${var.tags.Environment}-sg-default"
+      Type = "sg"
     },
     var.tags
   )
