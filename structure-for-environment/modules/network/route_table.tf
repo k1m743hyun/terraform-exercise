@@ -2,6 +2,10 @@
 # 이걸 Subnet에 연결해 써도 되지만, 여기서는 사용하지 않습니다
 resource "aws_default_route_table" "this" {
   default_route_table_id = aws_vpc.this.default_route_table_id
+
+  depends_on = [
+    aws_vpc.this
+  ]
   
   tags = merge(
     {
@@ -16,6 +20,10 @@ resource "aws_route_table" "this" {
   vpc_id = aws_vpc.this.id
   
   for_each = var.route_tables
+
+  depends_on = [
+    aws_vpc.this
+  ]
 
   tags = merge(
     {
@@ -34,4 +42,10 @@ resource "aws_route" "this" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = each.value == "public" ? aws_internet_gateway.this.id : null
   nat_gateway_id         = each.value == "public" ? null : aws_nat_gateway.this.id
+
+  depends_on = [
+    aws_route_table.this,
+    aws_internet_gateway.this,
+    aws_nat_gateway.this
+  ]
 }
