@@ -8,7 +8,7 @@ resource "aws_eip" "this" {
   
   tags = merge(
     {
-      Name = "eip-${var.tags.Environment}-natgw"
+      Name = "${var.tags.Environment}-eip-natgw"
       Type = "eip"
     },
     var.tags
