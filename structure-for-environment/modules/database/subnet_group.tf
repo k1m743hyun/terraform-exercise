@@ -1,11 +1,11 @@
 # RDS Subnet Group
 resource "aws_db_subnet_group" "this" {
-  name       = "sbng-${var.tags.Environment}-rds"
+  name       = "${var.tags.Environment}-sbng-rds"
   subnet_ids = var.subnet_ids
 
   tags = merge(
     {
-      Name = "sbng-${var.tags.Environment}-rds"
+      Name = "${var.tags.Environment}-sbng-rds"
       Type = "sbng"
     },
     var.tags

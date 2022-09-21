@@ -2,7 +2,7 @@
 resource "aws_rds_cluster_instance" "this" {
   count                        = length(var.rds_az)
   
-  identifier                   = format("rdsinst-${var.tags.Environment}-%s-${element(split("-", var.rds_az[count.index]), 1)}", var.rds_value[element(split("-", var.rds_az[count.index]), 0)].cluster_identifier)
+  identifier                   = format("${var.tags.Environment}-rdsinst-%s-${element(split("-", var.rds_az[count.index]), 1)}", var.rds_value[element(split("-", var.rds_az[count.index]), 0)].cluster_identifier)
   cluster_identifier           = aws_rds_cluster.this[element(split("-", var.rds_az[count.index]), 0)].cluster_identifier
   db_parameter_group_name      = aws_db_parameter_group.this.name
   instance_class               = var.rds_value[element(split("-", var.rds_az[count.index]), 0)].instance_class
@@ -22,7 +22,7 @@ resource "aws_rds_cluster_instance" "this" {
 
   tags = merge(
     {
-      Name    = format("rdsinst-${var.tags.Environment}-%s-${element(split("-", var.rds_az[count.index]), 1)}", var.rds_value[element(split("-", var.rds_az[count.index]), 0)].cluster_identifier)
+      Name    = format("${var.tags.Environment}-rdsinst-%s-${element(split("-", var.rds_az[count.index]), 1)}", var.rds_value[element(split("-", var.rds_az[count.index]), 0)].cluster_identifier)
       Type    = "rdsinst"
       Purpose = "postgres"
     },

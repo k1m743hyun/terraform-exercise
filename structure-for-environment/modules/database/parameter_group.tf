@@ -1,6 +1,6 @@
 # Aurora Postgres 13 Cluster Parameter Group
 resource "aws_rds_cluster_parameter_group" "this" {
-  name   = "paramg-${var.tags.Environment}-rds-cluster"
+  name   = "${var.tags.Environment}-paramg-rds-cluster"
   family = "aurora-postgresql13"
 
   parameter {
@@ -46,7 +46,7 @@ resource "aws_rds_cluster_parameter_group" "this" {
 
   tags = merge(
     {
-      Name = "paramg-${var.tags.Environment}-rds-cluster"
+      Name = "${var.tags.Environment}-paramg-rds-cluster"
       Type = "paramg"
     },
     var.tags
@@ -61,7 +61,7 @@ resource "aws_rds_cluster_parameter_group" "this" {
 
 # Aurora Postgres 13 Instance Parameter Group
 resource "aws_db_parameter_group" "this" {
-  name   = "paramg-${var.tags.Environment}-rds-instance"
+  name   = "${var.tags.Environment}-paramg-rds-instance"
   family = "aurora-postgresql13"
 
   parameter {
@@ -120,7 +120,7 @@ resource "aws_db_parameter_group" "this" {
 
   tags = merge(
     {
-      Name = "paramg-${var.tags.Environment}-rds-instance"
+      Name = "${var.tags.Environment}-paramg-rds-instance"
       Type = "paramg"
     },
     var.tags
