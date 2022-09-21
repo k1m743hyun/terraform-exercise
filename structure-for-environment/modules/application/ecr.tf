@@ -1,6 +1,7 @@
 # ECR
 resource "aws_ecr_repository" "this" {
   for_each             = var.ecr_value
+
   name                 = each.value.name
   image_tag_mutability = "MUTABLE"
 
@@ -11,7 +12,7 @@ resource "aws_ecr_repository" "this" {
   tags = merge(
     var.tags,
     {
-      Name = format("ecr-${var.tags.Owner}-${var.tags.Project}-${var.tags.Environment}-%s", each.value.name)
+      Name = format("${var.tags.Environment}-ecr-%s", each.value.name)
       Type = "ecr"
     }
   )
@@ -19,6 +20,7 @@ resource "aws_ecr_repository" "this" {
 
 resource "aws_ecr_repository_policy" "this" {
   for_each   = var.ecr_value
+
   repository = aws_ecr_repository.this[each.key].name
 
   policy = <<EOF
@@ -47,4 +49,8 @@ resource "aws_ecr_repository_policy" "this" {
     ]
   }
   EOF
+
+  depends_on = [
+    aws_ecr_repository.this
+  ]
 }
