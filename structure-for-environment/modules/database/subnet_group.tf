@@ -1,5 +1,5 @@
 # RDS Subnet Group
-resource "aws_db_subnet_group" "rds_sbng" {
+resource "aws_db_subnet_group" "this" {
   name       = "sbng-${var.tags.Environment}-rds"
   subnet_ids = var.subnet_ids
 
