@@ -14,8 +14,8 @@ resource "aws_rds_cluster" "this" {
   master_username                 = var.rds_master_username
   master_password                 = var.rds_master_password
   backup_retention_period         = 14
-  db_subnet_group_name            = "sbng-${var.tags.Environment}-rds"
-  db_cluster_parameter_group_name = lookup(each.value, "db_cluster_parameter_group_name", aws_rds_cluster_parameter_group.rds_cluster_parmetg.name)
+  db_subnet_group_name            = aws_db_subnet_group.rds_sbng.name
+  db_cluster_parameter_group_name = lookup(each.value, "db_cluster_parameter_group_name", aws_rds_cluster_parameter_group.rds_cluster_paramg.name)
   vpc_security_group_ids          = [aws_security_group.rds_sg.id]
   engine                          = "aurora-postgresql"
   engine_version                  = lookup(each.value, "engine_version", "13.3")
@@ -31,7 +31,10 @@ resource "aws_rds_cluster" "this" {
   snapshot_identifier = each.value.snapshot_identifier
 
   depends_on = [
-    aws_db_subnet_group.rds_sbng
+    aws_db_subnet_group.rds_sbng,
+    aws_db_parameter_group.rds_cluster_paramg,
+    aws_security_group.rds_sg,
+    aws_rds_global_cluster.this
   ]
 
   tags = merge(
