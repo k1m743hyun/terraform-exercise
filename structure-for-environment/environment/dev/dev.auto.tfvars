@@ -27,8 +27,6 @@ rds_config = {
     instance_class                   = "db.r5.large"
     snapshot_identifier              = null
     multi_az                         = [ "az2a", "az2c" ]
-    db_cluster_parameter_group_name  = "parmetg-dev-rds-cluster"
-    db_instance_parameter_group_name = "parmetg-dev-rds-instance"
     apply_immediately                = true
     deletion_protection              = false
   }
