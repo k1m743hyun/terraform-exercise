@@ -2,7 +2,11 @@
 resource "aws_security_group" "rds_sg" {
   name = "seg-rds-${var.tags.Environment}"
 
-  vpc_id = var.vpc_id
+  vpc_id = aws_vpc.this.id
+
+  depends_on = [
+    aws_vpc.this
+  ]
 
   tags = merge(
     {
@@ -23,6 +27,10 @@ resource "aws_security_group_rule" "rds_sg_cidr" {
   cidr_blocks       = [each.value.cidr_blocks]
   security_group_id = aws_security_group.rds_sg.id
   description       = each.value.description
+
+  depends_on = [
+    aws_security_group.rds_sg
+  ]
 }
 
 resource "aws_security_group_rule" "rds_sg_source" {
@@ -34,4 +42,8 @@ resource "aws_security_group_rule" "rds_sg_source" {
   source_security_group_id = each.value.source
   security_group_id        = aws_security_group.rds_sg.id
   description              = each.value.description
+
+  depends_on = [
+    aws_security_group.rds_sg
+  ]
 }
