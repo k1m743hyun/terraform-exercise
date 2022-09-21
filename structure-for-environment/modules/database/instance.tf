@@ -1,6 +1,7 @@
 # Aurora Postgres Instance 생성
 resource "aws_rds_cluster_instance" "this" {
   count                        = length(var.rds_az)
+  
   identifier                   = format("rdsinst-${var.tags.Environment}-%s-${element(split("-", var.rds_az[count.index]), 1)}", var.rds_value[element(split("-", var.rds_az[count.index]), 0)].cluster_identifier)
   cluster_identifier           = aws_rds_cluster.this[element(split("-", var.rds_az[count.index]), 0)].cluster_identifier
   db_parameter_group_name      = aws_db_parameter_group.this.name
