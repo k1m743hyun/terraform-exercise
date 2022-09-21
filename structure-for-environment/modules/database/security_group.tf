@@ -5,8 +5,8 @@ resource "aws_security_group" "this" {
 
   tags = merge(
     {
-      Name = "sg-${var.tags.Environment}-rds"
-      Type = "sg"
+      Name = "seg-${var.tags.Environment}-rds"
+      Type = "seg"
     },
     var.tags
   )
