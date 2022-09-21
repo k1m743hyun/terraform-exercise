@@ -28,6 +28,7 @@ resource "aws_route_table" "this" {
   tags = merge(
     {
       Name = "rtb-${var.tags.Environment}-${each.value}"
+      Type = "rtb"
     },
     var.tags
   )
