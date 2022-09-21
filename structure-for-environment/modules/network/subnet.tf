@@ -13,6 +13,7 @@ resource "aws_subnet" "this" {
   tags = merge(
     {
       Name = "sbn-${var.tags.Environment}-${element(split("-", var.subnets[count.index]), 0)}-${count.index + 1}"
+      Type = "sbn"
     },
     var.tags
   )

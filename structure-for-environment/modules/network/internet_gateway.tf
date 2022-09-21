@@ -9,6 +9,7 @@ resource "aws_internet_gateway" "this" {
   tags = merge(
     {
       Name = "igw-${var.tags.Environment}"
+      Type = "igw"
     },
     var.tags
   )

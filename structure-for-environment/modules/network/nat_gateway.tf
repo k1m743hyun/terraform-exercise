@@ -11,6 +11,7 @@ resource "aws_nat_gateway" "this" {
   tags = merge(
     {
       Name = "nat-${var.tags.Environment}-natgw"
+      Type = "nat"
     },
     var.tags
   )
