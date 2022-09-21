@@ -22,13 +22,12 @@ module "database" {
   source = "../../modules/database"
 
   region = var.region
-
   vpc_id = module.network.vpc_id
 
   rds_az = flatten([ for k, v in var.rds_config : [ for az in lookup(var.rds_config[k], "multi_az") : join("-", [k, az]) ] ])
   rds_value = var.rds_config
-  rds_sg_cidr = var.rds_sg_cidr
-  rds_sg_source = var.rds_sg_source
+  sg_rds_cidr = var.sg_rds_cidr
+  sg_rds_source = var.sg_rds_source
 
   rds_master_username = var.rds_master_username
   rds_master_password = var.rds_master_password

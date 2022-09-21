@@ -1,10 +1,10 @@
 # General
-region = "ap-northeast-1"
+region      = "ap-northeast-1"
 environment = "dev"
 
 
 # Network
-vpc_cidr = "10.0.0.0/16"
+vpc_cidr     = "10.0.0.0/16"
 subnet_cidr  = {
   public = [
     "10.0.0.0/24",
@@ -22,17 +22,17 @@ subnet_cidr  = {
 # Database
 rds_config = {
   "rds" = {
-    cluster_identifier               = "rds"
-    engine_version                   = "13.5"
-    instance_class                   = "db.r5.large"
-    snapshot_identifier              = null
-    multi_az                         = [ "az2a", "az2c" ]
-    apply_immediately                = true
-    deletion_protection              = false
+    cluster_identifier  = "rds"
+    engine_version      = "13.5"
+    instance_class      = "db.r5.large"
+    snapshot_identifier = null
+    multi_az            = [ "az2a", "az2c" ]
+    apply_immediately   = true
+    deletion_protection = false
   }
 }
 
-rds_sg_cidr = {
+sg_rds_cidr = {
   # ingress
   "ingress_5432" = {
     type        = "ingress"
@@ -53,7 +53,7 @@ rds_sg_cidr = {
   }
 }
 
-rds_sg_source = {
+sg_rds_source = {
 
 }
 

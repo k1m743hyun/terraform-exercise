@@ -34,7 +34,7 @@ resource "aws_rds_cluster" "this" {
   depends_on = [
     aws_db_subnet_group.this,
     aws_rds_cluster_parameter_group.this,
-    aws_security_group.sg_rds,
+    aws_security_group.this,
     aws_rds_global_cluster.this
   ]
 

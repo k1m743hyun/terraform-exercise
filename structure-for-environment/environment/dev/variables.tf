@@ -25,9 +25,9 @@ variable "subnet_cidr" {
 
 variable "rds_config" {}
 
-variable "rds_sg_cidr" {}
+variable "sg_rds_cidr" {}
 
-variable "rds_sg_source" {}
+variable "sg_rds_source" {}
 
 variable "rds_master_username" {}
 
