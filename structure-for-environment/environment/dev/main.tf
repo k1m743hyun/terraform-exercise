@@ -1,7 +1,7 @@
 module "network" {
   source = "../../modules/network"
 
-  vpc_name = "vpc-${var.environment}"
+  vpc_name = "${var.environment}-vpc"
   vpc_cidr = var.vpc_cidr
 
   route_tables = toset([for k, v in var.subnet_cidr : k])

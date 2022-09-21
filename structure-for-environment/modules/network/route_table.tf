@@ -9,7 +9,8 @@ resource "aws_default_route_table" "this" {
   
   tags = merge(
     {
-      Name = "rtb-${var.tags.Environment}-default"
+      Name = "${var.tags.Environment}-rtb-default"
+      Type = "rtb"
     },
     var.tags
   )
@@ -27,7 +28,8 @@ resource "aws_route_table" "this" {
 
   tags = merge(
     {
-      Name = "rtb-${var.tags.Environment}-${each.value}"
+      Name = "${var.tags.Environment}-rtb-${each.value}"
+      Type = "rtb"
     },
     var.tags
   )
