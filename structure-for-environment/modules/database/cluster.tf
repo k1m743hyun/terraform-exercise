@@ -15,7 +15,7 @@ resource "aws_rds_cluster" "this" {
   master_password                 = var.rds_master_password
   backup_retention_period         = 14
   db_subnet_group_name            = aws_db_subnet_group.rds_sbng.name
-  db_cluster_parameter_group_name = lookup(each.value, "db_cluster_parameter_group_name", aws_rds_cluster_parameter_group.rds_cluster_paramg.name)
+  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.rds_cluster_paramg.name
   vpc_security_group_ids          = [aws_security_group.rds_sg.id]
   engine                          = "aurora-postgresql"
   engine_version                  = lookup(each.value, "engine_version", "13.3")
