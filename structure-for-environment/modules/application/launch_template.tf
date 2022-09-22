@@ -2,7 +2,7 @@
 resource "aws_launch_template" "this" {
   for_each        = var.ngroup_value
 
-  name_prefix     = format("lt-${var.tags.Environment}-lt-%s-wrk", each.value.name)
+  name_prefix     = format("${var.tags.Environment}-lt-%s-wrk", each.value.name)
   default_version = each.value.default_version
 
   image_id        = contains(keys(each.value), "image_id") ? each.value.image_id : ""
