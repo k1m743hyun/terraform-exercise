@@ -5,6 +5,8 @@ variable "tags" {}
 
 #variable "kms" {}
 
+variable "subnet_ids" {}
+
 variable "ngroup_value" {}
 
 variable "ecr_value" {}
