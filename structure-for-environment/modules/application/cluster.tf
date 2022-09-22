@@ -9,7 +9,7 @@ resource "aws_eks_cluster" "this" {
     subnet_ids = [ "" ]
     endpoint_private_access = true
     endpoint_public_access  = true
-    public_access_cidrs = [ "" ]
+    public_access_cidrs = null
   }
 
   enabled_cluster_log_types = [
