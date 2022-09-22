@@ -1,11 +1,11 @@
-variable "ngroup_value" {}
-
 # From General
 variable "vpc_id" {}
 
 variable "tags" {}
 
-variable "kms" {}
+#variable "kms" {}
+
+variable "ngroup_value" {}
 
 variable "ecr_value" {}
 
