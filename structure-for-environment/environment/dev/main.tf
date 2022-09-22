@@ -43,6 +43,7 @@ module "application" {
   source = "../../modules/application"
 
   vpc_id = module.network.vpc_id
+  subnet_ids = module.network.private_subnet_ids
 
   ngroup_value = var.ngroup_value
   ecr_value = var.ecr_value
