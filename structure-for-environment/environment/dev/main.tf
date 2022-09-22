@@ -39,6 +39,16 @@ module "database" {
   }
 }
 
-#module "application" {
-#  source = "../../modules/application"
-#}
+module "application" {
+  source = "../../modules/application"
+
+  vpc_id = module.network.vpc_id
+
+  ngroup_value = var.ngroup_value
+  ecr_value = var.ecr_value
+  eks_oidc = var.eks_oidc
+
+  tags = {
+    Environment = var.environment
+  }
+}
