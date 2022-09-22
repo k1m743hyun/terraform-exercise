@@ -20,7 +20,7 @@ resource "aws_launch_template" "this" {
     }
   }
 
-  user_data = base64encode(local.lt_userdata)
+  #user_data = base64encode(local.lt_userdata)
 
   # Instance Tag
   tag_specifications {
