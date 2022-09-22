@@ -1,11 +1,12 @@
 # Node Group Launch Template
 resource "aws_launch_template" "this" {
   for_each        = var.ngroup_value
-  name_prefix     = format("lt-${var.tags.Owner}-${var.tags.Project}-${var.tags.Environment}-%s-wrk", each.value.name)
+
+  name_prefix     = format("${var.tags.Environment}-lt-%s-wrk", each.value.name)
   default_version = each.value.default_version
 
-  image_id      = contains(keys(each.value), "image_id") ? each.value.image_id : ""
-  instance_type = each.value.instance_type
+  image_id        = contains(keys(each.value), "image_id") ? each.value.image_id : ""
+  instance_type   = each.value.instance_type
 
   block_device_mappings {
     device_name = "/dev/xvda"
@@ -15,7 +16,7 @@ resource "aws_launch_template" "this" {
       volume_type           = "gp3"
       delete_on_termination = true
       encrypted             = true
-      kms_key_id            = var.kms.ebs
+      #kms_key_id            = var.kms.ebs
     }
   }
 
@@ -28,7 +29,7 @@ resource "aws_launch_template" "this" {
     tags = merge(
       var.tags,
       {
-        "Name" = format("ec2-${var.tags.Owner}-${var.tags.Project}-${var.tags.Environment}-%s-wrk", each.value.name)
+        "Name" = format("${var.tags.Environment}-ec2-%s-wrk", each.value.name)
         "Type" = "ec2"
       }
     )
@@ -41,7 +42,7 @@ resource "aws_launch_template" "this" {
     tags = merge(
       var.tags,
       {
-        "Name" = format("ebs-${var.tags.Owner}-${var.tags.Project}-${var.tags.Environment}-%s-wrk", each.value.name)
+        "Name" = format("${var.tags.Environment}-ebs-%s-wrk", each.value.name)
         "Type" = "ebs"
       }
     )
@@ -51,7 +52,7 @@ resource "aws_launch_template" "this" {
   tags = merge(
     var.tags,
     {
-      "Name" = format("lt-${var.tags.Owner}-${var.tags.Project}-${var.tags.Environment}-%s-wrk", each.value.name)
+      "Name" = format("${var.tags.Environment}-lt-%s-wrk", each.value.name)
       "Type" = "lt"
     }
   )
