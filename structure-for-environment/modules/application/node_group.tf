@@ -1,12 +1,12 @@
 # Node Group
 resource "aws_eks_node_group" "this" {
   for_each        = var.ngroup_value
+
   cluster_name    = aws_eks_cluster.this.name
   node_group_name = format("${var.tags.Environment}-ng-%s-wrk", each.value.name)
   node_role_arn   = aws_iam_role.eks_ngroup_role.arn
 
-  subnet_ids = [
-  ]
+  subnet_ids = var.subnet_ids
 
   launch_template {
     name    = aws_launch_template.this[each.key].name
