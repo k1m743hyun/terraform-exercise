@@ -10,6 +10,7 @@ resource "aws_iam_openid_connect_provider" "this" {
 
 data "aws_iam_policy_document" "this" {
   for_each = var.eks_oidc
+
   statement {
     actions = [ "sts:AssumeRoleWithWebIdentity" ]
     effect  = "Allow"
@@ -31,12 +32,14 @@ data "aws_iam_policy_document" "this" {
 
 resource "aws_iam_role" "this" {
   for_each           = var.eks_oidc
+
   assume_role_policy = data.aws_iam_policy_document.this[each.key].json
   name               = "role-${var.tags.Environment}-eks-oidc-${each.key}"
 }
 
 resource "aws_iam_policy" "this" {
   for_each = { for k, v in var.eks_oidc : k => v if lookup(v, "policy", {}) != {} }
+
   name     = "policy-${var.tags.Environment}-eks-oidc-${each.key}"
   path     = "/"
 
@@ -45,6 +48,7 @@ resource "aws_iam_policy" "this" {
 
 resource "aws_iam_role_policy_attachment" "this" {
   for_each   = { for k, v in var.eks_oidc : k => v if lookup(v, "policy", {}) != {} }
+  
   policy_arn = aws_iam_policy.this[each.key].arn
   role       = aws_iam_role.this[each.key].name
 }
