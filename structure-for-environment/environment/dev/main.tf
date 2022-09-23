@@ -35,7 +35,7 @@ module "database" {
   rds_master_username = var.rds_master_username
   rds_master_password = var.rds_master_password
 
-  subnet_ids = module.network.private_subnet_ids
+  subnet_ids = module.vpc.private_subnet_ids
 
   tags = {
     Environment = var.environment
