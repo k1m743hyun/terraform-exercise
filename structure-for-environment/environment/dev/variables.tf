@@ -27,7 +27,7 @@ variable "subnet_cidr" {
 }
 
 
-# Database
+# RDS
 
 variable "rds_config" {}
 
@@ -40,11 +40,15 @@ variable "rds_master_username" {}
 variable "rds_master_password" {}
 
 
-# Application
+# ECR
+
+variable "ecr_value" {}
+
+
+# EKS
 
 variable "ngroup_value" {}
 
-variable "ecr_value" {}
 
 variable "eks_oidc" {}
 
