@@ -25,7 +25,7 @@ module "database" {
   source = "../../modules/database"
 
   region = var.region
-  vpc_id = module.network.vpc_id
+  vpc_id = module.vpc.vpc_id
 
   rds_az = flatten([ for k, v in var.rds_config : [ for az in lookup(var.rds_config[k], "multi_az") : join("-", [k, az]) ] ])
   rds_value = var.rds_config
@@ -45,8 +45,8 @@ module "database" {
 module "application" {
   source = "../../modules/application"
 
-  vpc_id = module.network.vpc_id
-  subnet_ids = module.network.private_subnet_ids
+  vpc_id = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnet_ids
 
   ngroup_value = var.ngroup_value
   ecr_value = var.ecr_value
