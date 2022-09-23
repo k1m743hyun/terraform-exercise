@@ -1,17 +1,20 @@
-module "network" {
-  source = "../../modules/network"
+locals {
+  public_subnets = flatten([ for k, v in var.subnet_cidr : [ for c in v : join("-", [k, c]) ] if k == "public" ])
+  private_subnets = flatten([ for k, v in var.subnet_cidr : [ for c in v : join("-", [k, c]) ] if k == "private" ])
+}
+
+module "vpc" {
+  source = "../../modules/vpc"
 
   vpc_name = "${var.environment}-vpc"
   vpc_cidr = var.vpc_cidr
+  availability_zones = [ for a in data.aws_availability_zones.available.names: a if try(regex("^[a-z]{2}-[a-z]+-[0-9][a-z]$", a), false) != false ]
 
   route_tables = toset([for k, v in var.subnet_cidr : k])
 
-  availability_zone = data.aws_availability_zones.available.names
-
-  subnets = concat(
-    flatten([ for k, v in var.subnet_cidr : [ for c in v : join("-", [k, c]) ] if k == "public" ]),
-    flatten([ for k, v in var.subnet_cidr : [ for c in v : join("-", [k, c]) ] if k == "private" ])
-  )
+  public_subnets = local.public_subnets
+  private_subnets = local.private_subnets
+  subnets = concat(local.public_subnets, local.private_subnets)
 
   tags = {
     Environment = var.environment
