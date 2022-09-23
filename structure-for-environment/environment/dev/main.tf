@@ -42,28 +42,28 @@ module "vpc" {
 #   }
 # }
 
-module "ecr" {
-  source    = "../../modules/ecr"
+# module "ecr" {
+#   source    = "../../modules/ecr"
 
-  ecr_value = var.ecr_value
+#   ecr_value = var.ecr_value
 
-  tags = {
-    Environment = var.environment
-  }
+#   tags = {
+#     Environment = var.environment
+#   }
 
-}
+# }
 
-module "eks" {
-  source       = "../../modules/eks"
+# module "eks" {
+#   source       = "../../modules/eks"
 
-  vpc_id       = module.vpc.vpc_id
-  subnet_ids   = module.vpc.private_subnet_ids
+#   vpc_id       = module.vpc.vpc_id
+#   subnet_ids   = module.vpc.private_subnet_ids
 
-  ngroup_value = var.ngroup_value
+#   ngroup_value = var.ngroup_value
 
-  eks_oidc     = var.eks_oidc
+#   eks_oidc     = var.eks_oidc
 
-  tags = {
-    Environment = var.environment
-  }
-}
+#   tags = {
+#     Environment = var.environment
+#   }
+# }
