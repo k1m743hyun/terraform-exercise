@@ -2,7 +2,7 @@
 resource "aws_ecr_repository" "this" {
   for_each             = var.ecr_value
 
-  name                 = each.value.name
+  name                 = format("${var.tags.Environment}-ecr-%s", each.value.name)
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
