@@ -3,7 +3,7 @@ region      = "ap-northeast-1"
 environment = "dev"
 
 
-# Network
+# VPC
 vpc_cidr     = "10.0.0.0/16"
 subnet_cidr  = {
   public = [
@@ -19,7 +19,7 @@ subnet_cidr  = {
 }
 
 
-# Database
+# RDS
 rds_config = {
   "rds" = {
     cluster_identifier  = "rds"
@@ -58,7 +58,15 @@ sg_rds_source = {
 }
 
 
-# Application
+# ECR
+ecr_value = {
+  "app" = {
+    name = "app"
+  },
+}
+
+
+# EKS
 ngroup_value = {
   "istio" = {
     name            = "istio"
@@ -78,12 +86,6 @@ ngroup_value = {
     instance_type   = "m5.2xlarge"
     volume_size     = "300"
   }
-}
-# ECR
-ecr_value = {
-  "app" = {
-    name = "app"
-  },
 }
 
 eks_oidc = {

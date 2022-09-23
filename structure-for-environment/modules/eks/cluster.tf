@@ -6,10 +6,10 @@ resource "aws_eks_cluster" "this" {
 
   vpc_config {
     security_group_ids = [ aws_security_group.eks_cluster_sg.id ]
-    subnet_ids = [ "" ]
+    subnet_ids = var.subnet_ids
     endpoint_private_access = true
-    endpoint_public_access  = true
-    public_access_cidrs = null
+    #endpoint_public_access  = true
+    #public_access_cidrs = null
   }
 
   enabled_cluster_log_types = [

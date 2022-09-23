@@ -9,6 +9,4 @@ variable "subnet_ids" {}
 
 variable "ngroup_value" {}
 
-variable "ecr_value" {}
-
 variable "eks_oidc" {}
