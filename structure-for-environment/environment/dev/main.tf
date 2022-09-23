@@ -1,17 +1,20 @@
-module "network" {
-  source = "../../modules/network"
+locals {
+  public_subnets = flatten([ for k, v in var.subnet_cidr : [ for c in v : join("-", [k, c]) ] if k == "public" ])
+  private_subnets = flatten([ for k, v in var.subnet_cidr : [ for c in v : join("-", [k, c]) ] if k == "private" ])
+}
+
+module "vpc" {
+  source = "../../modules/vpc"
 
   vpc_name = "${var.environment}-vpc"
   vpc_cidr = var.vpc_cidr
+  availability_zones = [ for a in data.aws_availability_zones.available.names: a if try(regex("^[a-z]{2}-[a-z]+-[0-9][a-z]$", a), false) != false ]
 
   route_tables = toset([for k, v in var.subnet_cidr : k])
 
-  availability_zone = data.aws_availability_zones.available.names
-
-  subnets = concat(
-    flatten([ for k, v in var.subnet_cidr : [ for c in v : join("-", [k, c]) ] if k == "public" ]),
-    flatten([ for k, v in var.subnet_cidr : [ for c in v : join("-", [k, c]) ] if k == "private" ])
-  )
+  public_subnets = local.public_subnets
+  private_subnets = local.private_subnets
+  subnets = concat(local.public_subnets, local.private_subnets)
 
   tags = {
     Environment = var.environment
@@ -22,7 +25,7 @@ module "database" {
   source = "../../modules/database"
 
   region = var.region
-  vpc_id = module.network.vpc_id
+  vpc_id = module.vpc.vpc_id
 
   rds_az = flatten([ for k, v in var.rds_config : [ for az in lookup(var.rds_config[k], "multi_az") : join("-", [k, az]) ] ])
   rds_value = var.rds_config
@@ -32,7 +35,7 @@ module "database" {
   rds_master_username = var.rds_master_username
   rds_master_password = var.rds_master_password
 
-  subnet_ids = module.network.private_subnet_ids
+  subnet_ids = module.vpc.private_subnet_ids
 
   tags = {
     Environment = var.environment
@@ -42,8 +45,8 @@ module "database" {
 module "application" {
   source = "../../modules/application"
 
-  vpc_id = module.network.vpc_id
-  subnet_ids = module.network.private_subnet_ids
+  vpc_id = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnet_ids
 
   ngroup_value = var.ngroup_value
   ecr_value = var.ecr_value
