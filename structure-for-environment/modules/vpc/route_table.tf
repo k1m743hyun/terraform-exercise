@@ -18,7 +18,7 @@ resource "aws_default_route_table" "this" {
 
 # Subnet에 적용할 Route table 생성
 resource "aws_route_table" "this" {
-  vpc_id = aws_vpc.this.id
+  vpc_id   = aws_vpc.this.id
   
   for_each = var.route_tables
 
@@ -38,7 +38,7 @@ resource "aws_route_table" "this" {
 # Public Subnet에서 인터넷에 트래픽 요청시 앞서 정의한 Internet gateway로 보냅니다
 # Private Subnet에서 인터넷에 트래픽 요청시 앞서 정의한 NAT gateway로 보냅니다
 resource "aws_route" "this" {
-  for_each = var.route_tables
+  for_each               = var.route_tables
 
   route_table_id         = aws_route_table.this[each.value].id
   destination_cidr_block = "0.0.0.0/0"
