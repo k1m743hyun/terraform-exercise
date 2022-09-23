@@ -14,7 +14,4 @@ variable "private_subnets" {}
 
 variable "subnets" {}
 
-variable "tags" {
-  description = ""
-  type        = map(string)
-}
+variable "tags" {}
