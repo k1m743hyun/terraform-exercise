@@ -31,7 +31,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSVPCResourceController" {
 
 # Node Group Role
 resource "aws_iam_role" "eks_ngroup_role" {
-  name = "role-${var.tags.Environment}-eks-ngroup"
+  name = "${var.tags.Environment}-role-eks-ngroup"
 
   assume_role_policy = <<POLICY
   {
