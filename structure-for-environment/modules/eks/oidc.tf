@@ -34,13 +34,13 @@ resource "aws_iam_role" "this" {
   for_each           = var.eks_oidc
 
   assume_role_policy = data.aws_iam_policy_document.this[each.key].json
-  name               = "role-${var.tags.Environment}-eks-oidc-${each.key}"
+  name               = "${var.tags.Environment}-role-eks-oidc-${each.key}"
 }
 
 resource "aws_iam_policy" "this" {
   for_each = { for k, v in var.eks_oidc : k => v if lookup(v, "policy", {}) != {} }
 
-  name     = "policy-${var.tags.Environment}-eks-oidc-${each.key}"
+  name     = "${var.tags.Environment}-policy-eks-oidc-${each.key}"
   path     = "/"
 
   policy = each.value.policy
