@@ -26,7 +26,7 @@ rds_config = {
     engine_version      = "13.5"
     instance_class      = "db.r5.large"
     snapshot_identifier = null
-    multi_az            = [ "az2a", "az2c" ]
+    multi_az            = [ "az2a", "az2b" ]
     apply_immediately   = true
     deletion_protection = false
   }
