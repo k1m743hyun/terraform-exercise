@@ -13,15 +13,45 @@ variable "environment" {
   type        = string
 }
 
+
+# Network
+
 variable "vpc_cidr" {
   description = "The CIDR block for the VPC. Default value is a valid CIDR, but not acceptable by AWS and should be overriden"
   type        = string
 }
 
-variable "subnets" {
+variable "subnet_cidr" {
   description = "List of CIDR Blocks for each Public Subnet"
   type        = map(list(string))
 }
+
+
+# RDS
+
+variable "rds_config" {}
+
+variable "sg_rds_cidr" {}
+
+variable "sg_rds_source" {}
+
+variable "rds_master_username" {}
+
+variable "rds_master_password" {}
+
+
+# ECR
+
+variable "ecr_value" {}
+
+
+# EKS
+
+variable "ngroup_value" {}
+
+
+variable "eks_oidc" {}
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
