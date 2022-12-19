@@ -18,8 +18,4 @@ resource "aws_vpc" "this" {
 
 #  vpc_id     = aws_vpc.this.id
 #  cidr_block = each.value.cidr_block
-
-#  depends_on = [
-#    aws_vpc.this
-#  ]
 #}
