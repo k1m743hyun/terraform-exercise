@@ -24,7 +24,6 @@ resource "aws_eks_node_group" "this" {
   }
 
   depends_on = [
-    aws_launch_template.this,
     aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
@@ -41,9 +40,9 @@ resource "aws_eks_node_group" "this" {
     }
   )
 
-  # lifecycle {
-  #   ignore_changes = [
-  #     scaling_config[0].desired_size
-  #   ]
-  # }
+  lifecycle {
+    ignore_changes = [
+      scaling_config[0].desired_size
+    ]
+  }
 }
