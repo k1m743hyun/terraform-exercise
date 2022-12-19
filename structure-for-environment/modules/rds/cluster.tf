@@ -31,13 +31,6 @@ resource "aws_rds_cluster" "this" {
   deletion_protection             = lookup(each.value, "deletion_protection", true)
   snapshot_identifier             = each.value.snapshot_identifier
 
-  depends_on = [
-    aws_db_subnet_group.this,
-    aws_rds_cluster_parameter_group.this,
-    aws_security_group.this,
-    aws_rds_global_cluster.this
-  ]
-
   tags = merge(
     {
       Name    = format("${var.tags.Environment}-rds-%s", each.value.cluster_identifier)

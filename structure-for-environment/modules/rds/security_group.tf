@@ -23,10 +23,6 @@ resource "aws_security_group_rule" "this" {
   cidr_blocks       = [each.value.cidr_blocks]
   security_group_id = aws_security_group.this.id
   description       = each.value.description
-
-  depends_on = [
-    aws_security_group.this
-  ]
 }
 
 #resource "aws_security_group_rule" "sg_rds_source" {
@@ -39,8 +35,4 @@ resource "aws_security_group_rule" "this" {
 #  source_security_group_id = each.value.source
 #  security_group_id        = aws_security_group.sg_rds.id
 #  description              = each.value.description
-
-#  depends_on = [
-#    aws_security_group.sg_rds
-#  ]
 #}

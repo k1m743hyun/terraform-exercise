@@ -15,11 +15,6 @@ resource "aws_rds_cluster_instance" "this" {
   monitoring_role_arn          = lookup(var.rds_value[element(split("-", var.rds_az[count.index]), 0)], "monitoring_role_arn", null)
   monitoring_interval          = lookup(var.rds_value[element(split("-", var.rds_az[count.index]), 0)], "monitoring_interval", null)
 
-  depends_on = [
-    aws_rds_cluster.this,
-    aws_db_parameter_group.this
-  ]
-
   tags = merge(
     {
       Name    = format("${var.tags.Environment}-rdsinst-%s-${element(split("-", var.rds_az[count.index]), 1)}", var.rds_value[element(split("-", var.rds_az[count.index]), 0)].cluster_identifier)
